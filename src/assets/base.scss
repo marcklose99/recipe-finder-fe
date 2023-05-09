@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+* {
+  box-sizing: border-box;
+  font-family: "Roboto Light", sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/*********************************************************************/
+/* ------------------------ Font Styles ---------------------------- */
+/*********************************************************************/
+
+input::placeholder {
+  opacity: 0.5;
+  font-family: "Roboto Light", sans-serif;
+}
+
+input::-webkit-input-placeholder {
+  opacity: 0.5;
+  font-family: "Roboto Light", sans-serif;
+}
+
+input:-ms-input-placeholder {
+  opacity: 0.5;
+  font-family: "Roboto Light", sans-serif;
+}
+
+input:-moz-placeholder {
+  opacity: 0.5;
+  font-family: "Roboto Light", sans-serif;
+}
+
+input::-moz-placeholder {
+  opacity: 0.5;
+  font-family: "Roboto Light", sans-serif;
+}
