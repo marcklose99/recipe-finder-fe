@@ -19,7 +19,6 @@ onMounted(async () => {
 <template>
   <div class="recipe-grid">
     <AddCard/>
-
     <RecipeCard
         v-for="recipe in recipeStore.filteredRecipes"
         :key="recipe.id"
@@ -33,13 +32,11 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .recipe-grid {
-  width: 100%;
   padding: 20px;
   background-color: #fff;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: auto;
   grid-gap: 2em;
   
 }
