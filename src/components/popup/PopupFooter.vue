@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { usePopupStore } from '@/stores/PopupStore';
 import axios from 'axios';
+import {useRecipeStore} from "@/stores/RecipeStore";
 
 const popupStore = usePopupStore();
+const recipeStore = useRecipeStore();
 
 async function submitRecipe() {
-  axios.post( `http://localhost:8080/recipes`, 
-  { id: popupStore.recipe.id,
+  const recipe = { id: popupStore.recipe.id,
     title: popupStore.recipe.title,
     ingredientList: popupStore.recipe.ingredientList
-  });
+  };
+  axios.post( `http://localhost:8080/recipes`, recipe
+  );
+  recipeStore.allRecipes.push(recipe)
   popupStore.isActive = !popupStore.isActive;
 }
 

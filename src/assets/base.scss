@@ -44,3 +44,27 @@ input::-moz-placeholder {
   opacity: 0.5;
   font-family: "Roboto Light", sans-serif;
 }
+
+/*********************************************************************/
+/* ------------------------ Form Styles ---------------------------- */
+/*********************************************************************/
+
+label {
+  display: block;
+  margin-bottom: 12px;
+
+  span {
+    display: block;
+    margin-bottom: 4px;
+  }
+  input {
+    height: 45px;
+    background: #f2f2f2;
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+  }
+}

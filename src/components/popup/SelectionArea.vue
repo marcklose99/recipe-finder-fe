@@ -16,13 +16,11 @@ const popupStore = usePopupStore();
 <style lang="scss">
 .area {
   min-height: 100px;
-  max-height: auto;
   padding: 8px;
-
+  margin-bottom: 35px;
   border-radius: 5px;
-  border: 1px solid;
   overflow-y: hidden;
-
+  background-color: #f2f2f2;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
