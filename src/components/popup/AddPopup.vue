@@ -2,22 +2,19 @@
 import { usePopupStore } from "@/stores/PopupStore";
 import DescriptionSelection from "@/components/popup/DescriptionSelection.vue";
 import SelectionArea from "@/components/popup/SelectionArea.vue";
-import ResultDropDown from "@/components/popup/ResultDropDown.vue";
+import IngredientSelection from "@/components/popup/IngredientSelection.vue";
 import axios from "axios";
 import type { IIngredient } from "@/data/IIngredient";
 import type { Ref } from "vue";
 import { ref } from "vue";
 import PopupFooter from "@/components/popup/PopupFooter.vue";
-
-const popupStore = usePopupStore();
 import { debounce } from "lodash";
 
-const title: Ref<string> = ref(popupStore.recipe.title);
+const popupStore = usePopupStore();
 
 const searchTerm: Ref<String> = ref("");
 const searchResults: Ref<IIngredient[]> = ref([]);
 const showResults: Ref<Boolean> = ref(false);
-const selectedIngredients: Ref<IIngredient[]> = ref([] as IIngredient[]);
 
 const performSearch = debounce(async (query) => {
   try {
@@ -39,41 +36,21 @@ const handleSearchTermChange = () => {
   }
 };
 
-
-function clearDataFields() {
-  popupStore.recipe.title = "";
-  selectedIngredients.value = [];
-  showResults.value = false;
-  searchTerm.value = "";
-}
+function clearDataFields() {}
 </script>
 <template>
   <div class="popup">
     <div class="inner-popup">
       <h2>Create Or Update A Recipe</h2>
-
       <form @submit.prevent="" class="form-fields">
         <label for="recipeName">Recipe Name</label>
-        <input
-          v-model="popupStore.oldRecipe.title"
-          type="text"
-          id="recipeName"
-        />
+        <input v-model="popupStore.recipe.title" id="recipeName" />
         <label for="ingredients">Ingredients</label>
         <div class="ingredient-search">
-          <input
-            id="ingredients"
-            v-model="searchTerm"
-            @input="handleSearchTermChange"
-            placeholder="Search here for ingredients..."
-          />
-          <ResultDropDown
-            :results="searchResults"
-            v-if="showResults"
-          />
+          <IngredientSelection />
         </div>
 
-        <SelectionArea/>
+        <SelectionArea />
         <DescriptionSelection />
       </form>
       <PopupFooter @clear-data-fields="clearDataFields" />
