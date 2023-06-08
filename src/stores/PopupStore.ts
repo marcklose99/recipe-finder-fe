@@ -8,9 +8,28 @@ import type { IIngredient } from "@/data/IIngredient";
 export const usePopupStore = defineStore("popupStore", () => {
   const isActive: Ref<Boolean> = ref(false);
 
-  const oldRecipe: Ref<IRecipe> = ref({} as IRecipe);
-  const recipe: Ref<IRecipe> = ref(oldRecipe);
+  const recipe: Ref<IRecipe> = ref({
+    id: null,
+    title: "",
+    ingredientList: []
+  });
 
+//  const oldReicpe: Ref<IRecipe> = ref({} as IRecipe);
+
+
+  function loadRecipe(oldRecipe: IRecipe) {
+    recipe.value = oldRecipe;
+    isActive.value = !isActive.value;
+  }
+
+  function closeRecipe() {
+    recipe.value = {
+      id: null,
+      title: "",
+      ingredientList: []
+    };
+    isActive.value = !isActive.value;
+  }
   async function save() {
     const data = {
       id: recipe.value.id,
@@ -34,5 +53,5 @@ export const usePopupStore = defineStore("popupStore", () => {
   }
 
   }
-  return { isActive, recipe, oldRecipe, save, addIngredientToRecipe };
+  return { isActive, recipe, save, addIngredientToRecipe, loadRecipe, closeRecipe };
 });
