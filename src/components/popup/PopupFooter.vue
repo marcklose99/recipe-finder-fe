@@ -11,8 +11,7 @@ async function submitRecipe() {
     title: popupStore.recipe.title,
     ingredientList: popupStore.recipe.ingredientList
   };
-  axios.post( `http://localhost:8080/recipes`, recipe
-  );
+  axios.post( `http://localhost:8080/recipes`, recipe);
   recipeStore.allRecipes.push(recipe)
   popupStore.isActive = !popupStore.isActive;
 }

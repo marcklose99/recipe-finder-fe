@@ -19,7 +19,7 @@ header {
   background-image: url("@/assets/images/bc.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 50% 85%                  ;
+  background-position: 50% 85%;
 
   .container.searchbar {
     position: absolute;
