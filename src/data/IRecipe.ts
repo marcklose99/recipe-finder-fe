@@ -1,8 +1,7 @@
-export interface IRecipe {
-    title: string
-    countIngredientsInSale: number
+import type {IIngredient} from "@/data/IIngredient";
 
-    totalCountIngredients: number
-    totalPrice: number
-    imgSrc: string
+export interface IRecipe {
+    id: number
+    title: string
+    ingredientList: IIngredient[]
 }

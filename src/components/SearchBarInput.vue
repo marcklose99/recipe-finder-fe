@@ -8,13 +8,18 @@ const searchBar: Ref<string> = ref("");
 </script>
 
 <template>
-  <label for="searchbar">
-    <input  v-model="searchBar" @input="recipeStore.sortRecipe(searchBar)" type="text" id="searchbar" placeholder="Search for recipes..."/>
+  <label for="searchbar" class="searchbar">
+    <input  
+    v-model="searchBar" 
+    @input="recipeStore.sortRecipe(searchBar.trim())" 
+    type="text" 
+    id="searchbar" 
+    placeholder="Search for recipes..."/>
   </label>
 </template>
 
 <style lang="scss">
-label {
+.searchbar {
   width: 100%;
   height: 100%;
   display: flex;

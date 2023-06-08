@@ -1,28 +1,46 @@
 <script setup lang="ts">
-import Recipe from "@/components/Recipe.vue";
 import {useRecipeStore} from "@/stores/RecipeStore";
+import AddCard from "@/components/cards/AddCard.vue";
+import RecipeCard from "@/components/cards/RecipeCard.vue";
+import {onMounted, ref} from "vue";
+import FetchService from "@/services/FetchService";
+import type { Ref } from 'vue';
 
 const recipeStore = useRecipeStore();
+
+const hoveredRecipeId: Ref<Number | null> = ref(null);
+
+onMounted(async () => {
+  recipeStore.allRecipes = await FetchService.fetchMatches();
+  recipeStore.filteredRecipes = recipeStore.allRecipes;
+});
 </script>
 
 <template>
-<div class="recipe-grid">
-  <Recipe
-    v-for="(recipe, index) in recipeStore.filteredRecipes"
-    :key="index"
-    :recipe-data="recipe"/>
-</div>
+  <div class="recipe-grid">
+    <AddCard/>
+
+    <RecipeCard
+        v-for="recipe in recipeStore.filteredRecipes"
+        :key="recipe.id"
+        :recipe-data="recipe"
+        :is-hovered="recipe.id === hoveredRecipeId"
+        @mouseover="hoveredRecipeId = recipe.id"
+        @mouseleave="hoveredRecipeId = null"
+    />
+  </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .recipe-grid {
   width: 100%;
   padding: 20px;
   background-color: #fff;
+
   display: grid;
-  grid-template-columns: repeat(4,1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: auto;
-  grid-column-gap: 15px;
-  grid-row-gap: 15px;
+  grid-gap: 2em;
+  
 }
 </style>

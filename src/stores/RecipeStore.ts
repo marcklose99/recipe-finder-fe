@@ -1,19 +1,20 @@
-import { ref, computed } from 'vue'
-import type { Ref } from 'vue'
-import { defineStore } from 'pinia'
+import type {Ref} from 'vue'
+import {ref} from 'vue'
+import {defineStore} from 'pinia'
 import type {IRecipe} from "@/data/IRecipe";
-import recipedata from "@/data/recipedata.json";
 
 export const useRecipeStore = defineStore('recipeStore', () => {
-  const allRecipes: Ref<IRecipe[]> = ref(recipedata.recipes);
-  const filteredRecipes: Ref<IRecipe[]> = ref(allRecipes.value);
+  const allRecipes: Ref<IRecipe[]> = ref([]);
+  const filteredRecipes: Ref<IRecipe[]> = ref([]);
 
   function sortRecipe(searchVal: string): void {
-    filteredRecipes.value = allRecipes.value;
-    if(searchVal !== "") {
+    
+    if(searchVal != "") {
       filteredRecipes.value =  filteredRecipes.value.filter((val: IRecipe) => val.title.toLowerCase().includes(searchVal.toLowerCase()));
+
+    } else {
+      filteredRecipes.value = allRecipes.value;
     }
-    console.log(filteredRecipes.value)
   }
-  return { filteredRecipes, sortRecipe }
+  return { allRecipes, filteredRecipes, sortRecipe }
 })
