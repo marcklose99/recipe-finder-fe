@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-// maybe pseudo element
 import {usePopupStore} from "@/stores/PopupStore";
 
 const popupStore = usePopupStore();
@@ -22,8 +21,8 @@ const popupStore = usePopupStore();
   justify-content: center;
   align-items: center;
   .plus {
-    --b: 4px; /* the thickness */
-    width: 40px; /* the size */
+    --b: 4px;
+    width: 40px; 
     aspect-ratio: 1;
     border-radius: 50%;
     background: conic-gradient(from 90deg at var(--b) var(--b), #fff 90deg, #000 0) calc(100% + var(--b) / 2) calc(100% + var(--b)/2)/
