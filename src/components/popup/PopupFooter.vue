@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { usePopupStore } from '@/stores/PopupStore';
+import axios from 'axios';
 
 const popupStore = usePopupStore();
 
 async function submitRecipe() {
-  popupStore.oldRecipe = popupStore.recipe;
+  axios.post( `http://localhost:8080/recipes`, 
+  { id: popupStore.recipe.id,
+    title: popupStore.recipe.title,
+    ingredientList: popupStore.recipe.ingredientList
+  });
+  popupStore.isActive = !popupStore.isActive;
 }
-function cancel() {
-popupStore.recipe = popupStore.oldRecipe;
-popupStore.isActive = !popupStore.isActive;
-}
+
 </script>
 <template>
     <div class="actions">
-        <button @click="$emit('clearDataFields')">Delete</button>
-        <button @click="cancel()">Cancel</button>
+        <button @click="popupStore.closeRecipe()">Cancel</button>
         <button @click="submitRecipe()" type="submit">Save Recipe</button>
       </div>
 </template>
