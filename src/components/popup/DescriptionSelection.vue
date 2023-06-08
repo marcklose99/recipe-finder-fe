@@ -5,7 +5,6 @@ import type {Ref} from 'vue';
 const descriptions: Ref<String[]> = ref([]);
 const text: Ref<String> = ref(""); 
 function addDescription() {
-  console.log(text.value)
 descriptions.value.push(text.value);
 }
 </script>
