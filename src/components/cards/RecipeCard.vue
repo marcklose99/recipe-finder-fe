@@ -13,17 +13,12 @@ const props = defineProps({
     type: Boolean,
   },
 });
-
-function loadRecipe() {
-  popupStore.oldRecipe = props.recipeData; 
-  popupStore.isActive = !popupStore.isActive;
-}
 </script>
 <template>
   <div class="card recipe">
     <div v-if="props.isHovered" class="update-icon">
       <svg
-        @click="loadRecipe()"
+        @click="popupStore.loadRecipe(props.recipeData)"
         id="Layer_1"
         data-name="Layer 1"
         xmlns="http://www.w3.org/2000/svg"
