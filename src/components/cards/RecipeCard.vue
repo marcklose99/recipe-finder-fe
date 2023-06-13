@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import type { IIngredient } from "@/data/IIngredient";
 import type { IRecipe } from "@/data/IRecipe";
 import { usePopupStore } from "@/stores/PopupStore";
+import type { Ref } from "vue";
+import { computed } from "vue";
 
 const popupStore = usePopupStore();
 
@@ -8,12 +11,24 @@ const props = defineProps({
   recipeData: {
     type: Object as () => IRecipe,
     required: true,
-  }
+  },
+});
+
+const offerCount: Ref<string> = computed(() => {
+  console.log(props.recipeData.ingredientList);
+  const offerCount: IIngredient[] = props.recipeData.ingredientList.filter(
+    (ingredient) => ingredient.test
+  );
+  return `${offerCount.length} / ${props.recipeData.ingredientList.length}`;
+});
+
+const marketCount: Ref<number> = computed(() => {
+  const markets = new Set<IIngredient>(props.recipeData.ingredientList);
+  return markets.size;
 });
 </script>
 <template>
   <div class="card recipe">
-
     <slot name="action-icon"></slot>
     <div class="card-heading">
       <img src="/" alt="Profile Image" />
@@ -22,15 +37,15 @@ const props = defineProps({
     <div class="card-content">
       <span class="count-row">
         Zutaten im Angebot:
-        <span calss="count">3/7</span>
+        <span calss="count">{{ offerCount }}</span>
       </span>
       <span class="retailer-row">
         Anzahl an Märkten:
-        <span class="retailer">3</span>
+        <span class="retailer">{{ marketCount }}</span>
       </span>
       <span class="valid-row">
         Gültig bis:
-        <span class="valid">26.06.2023</span>
+        <span class="valid-to">26.06.2023</span>
       </span>
     </div>
   </div>
