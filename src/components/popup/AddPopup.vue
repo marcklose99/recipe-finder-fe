@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { usePopupStore } from "@/stores/PopupStore";
-import DescriptionSelection from "@/components/popup/DescriptionSelection.vue";
-import SelectionArea from "@/components/popup/SelectionArea.vue";
-import IngredientSelection from "@/components/popup/IngredientSelection.vue";
 import axios from "axios";
 import type { IIngredient } from "@/data/IIngredient";
 import type { Ref } from "vue";
