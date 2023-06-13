@@ -2,7 +2,7 @@
 import {useRecipeStore} from "@/stores/RecipeStore";
 import AddCard from "@/components/cards/AddCard.vue";
 import RecipeCard from "@/components/cards/RecipeCard.vue";
-import {onMounted, onUpdated, ref} from "vue";
+import {onMounted, ref} from "vue";
 import FetchService from "@/services/FetchService";
 import type { Ref } from 'vue';
 import EditIcon from "@/components/icons/EditIcon.vue";
@@ -12,7 +12,6 @@ const recipeStore = useRecipeStore();
 const hoveredRecipeId: Ref<Number | null> = ref(null);
 
 onMounted(async () => {
-  console.log("Mounted!")
   recipeStore.allRecipes = await FetchService.fetchMatches();
   recipeStore.filteredRecipes = recipeStore.allRecipes;
 });
