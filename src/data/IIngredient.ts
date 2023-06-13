@@ -7,5 +7,4 @@ export interface IIngredient {
     validTo: Date
     validFrom: Date
     isValid: boolean
-    description: string[]
 }
