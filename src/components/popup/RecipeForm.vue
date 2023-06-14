@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import IngredientSelection from "@/components/popup/IngredientSelection.vue";
-import DescriptionSelection from "@/components/popup/DescriptionSelection.vue";
+import InstructionSelection from "@/components/popup/InstructionSelection.vue";
 import SelectionArea from "@/components/popup/SelectionArea.vue";
 import {usePopupStore} from "@/stores/PopupStore";
 import { ref } from "vue";
 import type { Ref } from "vue";
 import RefreshIcon from "@/components/icons/RefreshIcon.vue";
+import type { IInstruction } from "@/data/IInstruction";
 
 const popupStore = usePopupStore();
 
-const descriptions: Ref<String[]> = ref([]);
-const text: Ref<String> = ref("");
+const text: Ref<string> = ref("");
 
-function addDescription() {
-  descriptions.value.push(text.value);
+function addInstruction() {
+  const instructionStep: Ref<IInstruction> = ref({
+    stepId: popupStore.counter++,
+    text: text.value
+  }) 
+  popupStore.recipe.instructionList.push(instructionStep.value);
+  console.log(instructionStep)
 }
 
 const imageUpload = ref(null)
@@ -41,14 +46,13 @@ function uploadImage(event: any){
           />
         </label>
 
-        <label for="description">
-          <span>Description</span>
+        <label for="instruction">
+          <span>Instruction</span>
           <input
-              ref="imageUpload"
-              id="description"
-              type="text" placeholder="Description goes here..."
+              id="instruction"
+              type="text" placeholder="Instruction goes here..."
               v-model="text"
-              @keyup.enter="addDescription()"
+              @keyup.enter="addInstruction()"
           >
         </label>
       </div>
@@ -74,7 +78,7 @@ function uploadImage(event: any){
     </label>
 
     <SelectionArea />
-    <DescriptionSelection :descriptions="descriptions" />
+    <InstructionSelection/>
   </form>
 </template>
 
