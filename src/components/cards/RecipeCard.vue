@@ -1,23 +1,19 @@
 <script setup lang="ts">
 import type { IIngredient } from "@/data/IIngredient";
 import type { IRecipe } from "@/data/IRecipe";
-import { usePopupStore } from "@/stores/PopupStore";
-import type { Ref } from "vue";
+import type { PropType, Ref } from "vue";
 import { computed } from "vue";
-
-const popupStore = usePopupStore();
 
 const props = defineProps({
   recipeData: {
-    type: Object as () => IRecipe,
+    type: Object as PropType<IRecipe>,
     required: true,
   },
 });
 
 const offerCount: Ref<string> = computed(() => {
-  console.log(props.recipeData.ingredientList);
   const offerCount: IIngredient[] = props.recipeData.ingredientList.filter(
-    (ingredient) => ingredient.test
+    (ingredient) => ingredient.isValid
   );
   return `${offerCount.length} / ${props.recipeData.ingredientList.length}`;
 });
@@ -25,6 +21,27 @@ const offerCount: Ref<string> = computed(() => {
 const marketCount: Ref<number> = computed(() => {
   const markets = new Set<IIngredient>(props.recipeData.ingredientList);
   return markets.size;
+});
+
+const validTo: Ref<String> = computed(() => {
+  
+    const dates = props.recipeData.ingredientList.map((ing) => ing.validTo);
+    const smallestDate: Date = dates.reduce((minDate, currentDate) => {
+      if (currentDate < minDate) {
+        return currentDate;
+      } else {
+        return minDate;
+      }
+    });
+    
+    return new Date(smallestDate).toLocaleTimeString(
+        [],
+        {
+            day: '2-digit',
+            month:'2-digit',
+            year: 'numeric'
+        }
+    ).split(',')[0];
 });
 </script>
 <template>
@@ -45,7 +62,7 @@ const marketCount: Ref<number> = computed(() => {
       </span>
       <span class="valid-row">
         Gültig bis:
-        <span class="valid-to">26.06.2023</span>
+        <span class="valid-to">{{ validTo }}</span>
       </span>
     </div>
   </div>
