@@ -6,16 +6,16 @@ import axios from "axios";
 import type { IIngredient } from "@/data/IIngredient";
 
 export const usePopupStore = defineStore("popupStore", () => {
-  const isActive: Ref<Boolean> = ref(false);
+
+  const counter: Ref<number> = ref(0);
+  const isActive: Ref<boolean> = ref(false);
 
   const recipe: Ref<IRecipe> = ref({
     id: null,
     title: "",
-    ingredientList: []
+    ingredientList: [],
+    instructionList: [],
   });
-
-//  const oldReicpe: Ref<IRecipe> = ref({} as IRecipe);
-
 
   function loadRecipe(oldRecipe: IRecipe) {
     recipe.value = oldRecipe;
@@ -23,10 +23,12 @@ export const usePopupStore = defineStore("popupStore", () => {
   }
 
   function closeRecipe() {
+    counter.value = 0;
     recipe.value = {
       id: null,
       title: "",
-      ingredientList: []
+      ingredientList: [],
+      instructionList: [],
     };
     isActive.value = !isActive.value;
   }
@@ -47,11 +49,21 @@ export const usePopupStore = defineStore("popupStore", () => {
     console.log("Submitted recipe!");
   }
 
-  function addIngredientToRecipe(ingredient: IIngredient) {
-    if (!recipe.value.ingredientList.some((item) => item.id === ingredient.id)) {
-      recipe.value.ingredientList.push(ingredient);
-  }
 
+  function addIngredientToRecipe(ingredient: IIngredient) {
+    if (
+      !recipe.value.ingredientList.some((item) => item.id === ingredient.id)
+    ) {
+      recipe.value.ingredientList.push(ingredient);
+    }
   }
-  return { isActive, recipe, save, addIngredientToRecipe, loadRecipe, closeRecipe };
+  return {
+    isActive,
+    recipe,
+    counter,
+    save,
+    addIngredientToRecipe,
+    loadRecipe,
+    closeRecipe,
+  };
 });
