@@ -5,12 +5,12 @@ import axios from "axios";
 import { debounce } from "lodash";
 import type { IIngredient } from "@/data/IIngredient";
 import { usePopupStore } from "@/stores/PopupStore";
+import Ingredient from "../Ingredient.vue";
 
 const popupStore = usePopupStore();
 const searchTerm: Ref<String> = ref("");
 const searchResults: Ref<IIngredient[]> = ref([]);
 const showResults: Ref<Boolean> = ref(false);
-const selectedIngredients: Ref<IIngredient[]> = ref([]);
 
 const performSearch = debounce(async (query) => {
   try {
@@ -45,13 +45,12 @@ const handleSearchTermChange = () => {
   />
   <div v-if="showResults" class="popup">
     <ul class="popup-list">
-      <li
+      <Ingredient
         v-for="ingredient in searchResults"
         :key="ingredient.id"
+        :ingredient="ingredient"
         @click="popupStore.addIngredientToRecipe(ingredient)"
-      >
-        {{ ingredient.title }}
-      </li>
+      />
     </ul>
   </div>
 </template>
