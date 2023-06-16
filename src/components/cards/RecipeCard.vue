@@ -3,7 +3,7 @@ import type { IIngredient } from "@/data/IIngredient";
 import type { IRecipe } from "@/data/IRecipe";
 import axios from "axios";
 import type { PropType, Ref } from "vue";
-import { computed, onMounted } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 const props = defineProps({
   recipeData: {
@@ -12,7 +12,7 @@ const props = defineProps({
   },
 });
 
-let imageUrl: string;
+let imageUrl: Ref<string> = ref("");
 
 const offerCount: Ref<string> = computed(() => {
   const offerCount: IIngredient[] = props.recipeData.ingredientList.filter(
@@ -22,61 +22,56 @@ const offerCount: Ref<string> = computed(() => {
 });
 
 const marketCount: Ref<number> = computed(() => {
-  const markets = new Set<IIngredient>(props.recipeData.ingredientList);
+  const retailer = props.recipeData.ingredientList.map(
+    (ingredient) => ingredient.nameOfRetailer
+  );
+  const markets = new Set<string>(retailer);
   return markets.size;
 });
 
 const validTo: Ref<String> = computed(() => {
-  
-    const dates = props.recipeData.ingredientList.map((ing) => ing.validTo);
-    const smallestDate: Date = dates.reduce((minDate, currentDate) => {
-      if (currentDate < minDate) {
-        return currentDate;
-      } else {
-        return minDate;
-      }
-    });
-    
-    return new Date(smallestDate).toLocaleTimeString(
-        [],
-        {
-            day: '2-digit',
-            month:'2-digit',
-            year: 'numeric'
-        }
-    ).split(',')[0];
-});
+  const dates = props.recipeData.ingredientList.map((ing) => ing.validTo);
+  const smallestDate: Date = dates.reduce((minDate, currentDate) => {
+    if (currentDate < minDate) {
+      return currentDate;
+    } else {
+      return minDate;
+    }
+  });
 
-onMounted( async() => {
-  await axios.get(`http://localhost:8080/recipes/${props.recipeData.id}/image`)
-      .then(response => {
-        imageUrl = response.data;
-      })
-      .catch(error => {
-        console.error('Error fetching image URL:', error);
-      });
+  return new Date(smallestDate)
+    .toLocaleTimeString([], {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    })
+    .split(",")[0];
+});
+onBeforeMount(() => {});
+onMounted(async () => {
+  await axios
+    .get(`http://localhost:8080/recipes/${props.recipeData.id}/image`)
+    .then((response) => {
+      imageUrl.value = response.data;
+    })
+    .catch((error) => {
+      console.error("Error fetching image URL:", error);
+    });
 });
 </script>
 <template>
   <div class="card recipe">
-    <slot name="action-icon"></slot>
-    <div class="card-heading">
-      <img :src="imageUrl" alt="Profile Image" />
-      <h2>{{ props.recipeData.title }}</h2>
+    <div class="image-wrapper">
+      <img :src="imageUrl" alt="Recipe Image" />
     </div>
+    <h2>{{ props.recipeData.title }}</h2>
     <div class="card-content">
-      <span class="count-row">
-        Zutaten im Angebot:
-        <span calss="count">{{ offerCount }}</span>
-      </span>
-      <span class="retailer-row">
-        Anzahl an Märkten:
-        <span class="retailer">{{ marketCount }}</span>
-      </span>
-      <span class="valid-row">
-        Gültig bis:
-        <span class="valid-to">{{ validTo }}</span>
-      </span>
+      <span class="count-row"> Zutaten im Angebot: </span>
+      <span class="count">{{ offerCount }}</span>
+      <span class="retailer-row"> Anzahl an Märkten: </span>
+      <span class="retailer">{{ marketCount }}</span>
+      <span class="valid-row"> Gültig bis: </span>
+      <span class="valid-to">{{ validTo }}</span>
     </div>
   </div>
 </template>
@@ -84,27 +79,30 @@ onMounted( async() => {
 <style lang="scss" scoped>
 @import "@/assets/scss/Card.scss";
 .card.recipe {
-  display: flex;
-  flex-direction: column;
+  min-height: 350px;
   cursor: pointer;
 
-  .card-heading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  &:hover {
+    h2 {
+      color: #a0c49d;
+      transition: color 0.4s ease-in-out;
+    }
+  }
+  .image-wrapper {
+    border-radius: 12px;
+    overflow: hidden;
 
     img {
-      height: 100px;
-      width: 100px;
+      height: 200px;
+      min-width: 150px;
+      width: 100%;
+      object-fit: cover;
     }
   }
 
   .card-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 65% 35%;
   }
 }
 </style>
