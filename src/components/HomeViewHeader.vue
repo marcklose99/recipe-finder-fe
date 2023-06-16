@@ -50,7 +50,7 @@ header {
     left: 8px;
     width: calc(100% - 16px);
     height: calc(100% - 16px);
-    background-color: rgba(247, 215, 148, 0.6);
+    background-color:#A0C49D;
     z-index: 1;
     border-radius: 6px;
   }
