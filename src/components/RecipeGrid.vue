@@ -29,7 +29,6 @@ function showMatchingRecipe(recipeId: number): void {
 
 <template>
   <div class="recipe-grid">
-    <AddCard/>
     <RecipeCard
         v-for="recipe in recipeStore.filteredRecipes"
         :key="recipe.id"
@@ -54,12 +53,5 @@ function showMatchingRecipe(recipeId: number): void {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2em;
-
-  .update-icon {
-    position: absolute;
-    height: 20px;
-    width: 20px;
-    cursor: pointer;
-  }
 }
 </style>
