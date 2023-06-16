@@ -6,6 +6,7 @@ import {onMounted, ref} from "vue";
 import FetchService from "@/services/FetchService";
 import type { Ref } from 'vue';
 import EditIcon from "@/components/icons/EditIcon.vue";
+import router from "@/router";
 
 const recipeStore = useRecipeStore();
 
@@ -15,6 +16,14 @@ onMounted(async () => {
   recipeStore.allRecipes = await FetchService.fetchMatches();
   recipeStore.filteredRecipes = recipeStore.allRecipes;
 });
+
+// Redirect to matching recipe view when a recipe has been clicked
+function showMatchingRecipe(recipeId: number): void {
+  router.push({
+    name: 'recipe',
+    params: {id: recipeId }
+  });
+}
 
 </script>
 
@@ -28,6 +37,7 @@ onMounted(async () => {
         :is-hovered="recipe.id === hoveredRecipeId"
         @mouseover="hoveredRecipeId = recipe.id"
         @mouseleave="hoveredRecipeId = null"
+        @click="showMatchingRecipe(recipe.id)"
     >
       <template #action-icon>
         <EditIcon/>
