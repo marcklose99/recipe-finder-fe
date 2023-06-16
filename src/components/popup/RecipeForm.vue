@@ -21,11 +21,13 @@ function addInstruction() {
   console.log(instructionStep)
 }
 
-const imageUpload = ref(null)
 const previewImage = ref(null)
 
 function uploadImage(event: any){
   const image = event.target.files[0];
+  popupStore.file = image;
+  console.log(popupStore.file)
+  popupStore.recipe.imageName = event.target.files[0].name;
   const reader = new FileReader();
   reader.readAsDataURL(image);
   reader.onload = (e: any) => {

@@ -9,12 +9,31 @@ export const usePopupStore = defineStore("popupStore", () => {
 
   const counter: Ref<number> = ref(0);
   const isActive: Ref<boolean> = ref(false);
-
+  const file: File = {
+    lastModified: 0,
+    name: "",
+    webkitRelativePath: "",
+    size: 0,
+    type: "",
+    arrayBuffer: function (): Promise<ArrayBuffer> {
+      throw new Error("Function not implemented.");
+    },
+    slice: function (start?: number | undefined, end?: number | undefined, contentType?: string | undefined): Blob {
+      throw new Error("Function not implemented.");
+    },
+    stream: function (): ReadableStream<Uint8Array> {
+      throw new Error("Function not implemented.");
+    },
+    text: function (): Promise<string> {
+      throw new Error("Function not implemented.");
+    }
+  };
   const recipe: Ref<IRecipe> = ref({
     id: null,
     title: "",
     ingredientList: [],
     instructionList: [],
+    imageName: ""
   });
 
   function loadRecipe(oldRecipe: IRecipe) {
@@ -29,26 +48,10 @@ export const usePopupStore = defineStore("popupStore", () => {
       title: "",
       ingredientList: [],
       instructionList: [],
+      imageName: "",
     };
     isActive.value = !isActive.value;
   }
-  async function save() {
-    const data = {
-      id: recipe.value.id,
-      title: recipe.value.title,
-      ingredientList: recipe.value.ingredientList.map((ingredient) => ({
-        id: ingredient.id,
-      })),
-    };
-    const json = JSON.stringify(data);
-    const res = await axios.post("http://localhost:8080/recipes", json, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Submitted recipe!");
-  }
-
 
   function addIngredientToRecipe(ingredient: IIngredient) {
     if (
@@ -61,7 +64,7 @@ export const usePopupStore = defineStore("popupStore", () => {
     isActive,
     recipe,
     counter,
-    save,
+    file,
     addIngredientToRecipe,
     loadRecipe,
     closeRecipe,
