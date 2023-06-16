@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { IIngredient } from "@/data/IIngredient";
 import type { IRecipe } from "@/data/IRecipe";
+import axios from "axios";
 import type { PropType, Ref } from "vue";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 const props = defineProps({
   recipeData: {
@@ -10,6 +11,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+let imageUrl: string;
 
 const offerCount: Ref<string> = computed(() => {
   const offerCount: IIngredient[] = props.recipeData.ingredientList.filter(
@@ -43,12 +46,22 @@ const validTo: Ref<String> = computed(() => {
         }
     ).split(',')[0];
 });
+
+onMounted( async() => {
+  await axios.get(`http://localhost:8080/recipes/${props.recipeData.id}/image`)
+      .then(response => {
+        imageUrl = response.data;
+      })
+      .catch(error => {
+        console.error('Error fetching image URL:', error);
+      });
+});
 </script>
 <template>
   <div class="card recipe">
     <slot name="action-icon"></slot>
     <div class="card-heading">
-      <img src="/" alt="Profile Image" />
+      <img :src="imageUrl" alt="Profile Image" />
       <h2>{{ props.recipeData.title }}</h2>
     </div>
     <div class="card-content">
@@ -73,12 +86,18 @@ const validTo: Ref<String> = computed(() => {
 .card.recipe {
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 
   .card-heading {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    img {
+      height: 100px;
+      width: 100px;
+    }
   }
 
   .card-content {
