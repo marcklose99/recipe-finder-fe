@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { usePopupStore } from "@/stores/PopupStore";
-import axios, { formToJSON } from "axios";
+import axios, { formToJSON, type AxiosResponse, Axios } from "axios";
 import { useRecipeStore } from "@/stores/RecipeStore";
 import type { IRecipe } from "@/data/IRecipe";
 
@@ -8,40 +8,34 @@ const popupStore = usePopupStore();
 const recipeStore = useRecipeStore();
 
 async function submitRecipe() {
-  popupStore.counter = 0;
-
-  const recipe: IRecipe = popupStore.recipe;
-
-  axios.postForm('http://localhost:8080/recipes', {
-    recipe: new Blob([JSON.stringify({
-      title: popupStore.recipe.title,
-      ingredientList: popupStore.recipe.ingredientList,
-      instructionList: popupStore.recipe.instructionList,
-      imageName: popupStore.file.name
-    })], { type: 'application/json' }),
-    file: popupStore.file
-  }), {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  }
-
-
-  //   axios.post('http://localhost:8080/recipes', {
-  //     'recipe': {
-  //       title: popupStore.recipe.title,
-  //       ingredientList: popupStore.recipe.ingredientList,
-  //       instructionList: popupStore.recipe.instructionList,
-  //       imageName: ""
-  //     },
-  //   'file': popupStore.file
-  // }, {
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data'
-  //   }
-  // });
-
-  recipeStore.allRecipes.push(popupStore.recipe);
+  axios
+    .postForm("http://localhost:8080/recipes", {
+      recipe: new Blob(
+        [
+          JSON.stringify({
+            title: popupStore.recipe.title,
+            ingredientList: popupStore.recipe.ingredientList,
+            instructionList: popupStore.recipe.instructionList,
+            imageName: popupStore.file.name,
+          }),
+        ],
+        { type: "application/json" }
+      ),
+      file: popupStore.file,
+    })
+    .then((response: AxiosResponse) => {
+      const createdRecipe: IRecipe = response.data;
+      recipeStore.allRecipes.push(createdRecipe);
+    })
+    .catch((error) => {
+      switch (error.response.status) {
+        default:
+          console.log(
+            "PopupFooter.vue no status case " + error.response.status
+          );
+          break;
+      }
+    });
   popupStore.isActive = !popupStore.isActive;
 }
 </script>
