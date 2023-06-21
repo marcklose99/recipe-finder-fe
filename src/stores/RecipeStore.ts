@@ -11,7 +11,7 @@ export const useRecipeStore = defineStore('recipeStore', () => {
 
   // set counter to zero if a new recipe was added
   watch(allRecipes, () => {
-    popupStore.counter = 0;
+    // popupStore.counter = 0;
   });
   
   function sortRecipe(searchVal: string): void {

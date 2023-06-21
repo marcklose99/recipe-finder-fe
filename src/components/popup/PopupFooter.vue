@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { usePopupStore } from "@/stores/PopupStore";
 import axios, { formToJSON, type AxiosResponse, Axios } from "axios";
 import { useRecipeStore } from "@/stores/RecipeStore";
 import type { IRecipe } from "@/data/IRecipe";
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
 
-const popupStore = usePopupStore();
+const recipeCreationStore = useRecipeCreationStore();
 const recipeStore = useRecipeStore();
 
 async function submitRecipe() {
@@ -13,15 +13,13 @@ async function submitRecipe() {
       recipe: new Blob(
         [
           JSON.stringify({
-            title: popupStore.recipe.title,
-            ingredientList: popupStore.recipe.ingredientList,
-            instructionList: popupStore.recipe.instructionList,
-            imageName: popupStore.file.name,
+            title: recipeCreationStore.recipe.title,
+            ingredientList: recipeCreationStore.recipe.ingredientList,
+            instructionList: recipeCreationStore.recipe.instructionList,
           }),
         ],
         { type: "application/json" }
       ),
-      file: popupStore.file,
     })
     .then((response: AxiosResponse) => {
       const createdRecipe: IRecipe = response.data;
@@ -36,12 +34,10 @@ async function submitRecipe() {
           break;
       }
     });
-  popupStore.isActive = !popupStore.isActive;
 }
 </script>
 <template>
   <div class="actions">
-    <button @click="popupStore.closeRecipe()">Cancel</button>
     <button @click="submitRecipe()" type="submit">Save Recipe</button>
   </div>
 </template>

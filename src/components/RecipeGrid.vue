@@ -5,7 +5,6 @@ import RecipeCard from "@/components/cards/RecipeCard.vue";
 import {onMounted, ref} from "vue";
 import FetchService from "@/services/FetchService";
 import type { Ref } from 'vue';
-import EditIcon from "@/components/icons/EditIcon.vue";
 import router from "@/router";
 
 const recipeStore = useRecipeStore();
@@ -39,7 +38,6 @@ function showMatchingRecipe(recipeId: number): void {
         @click="showMatchingRecipe(recipe.id)"
     >
       <template #action-icon>
-        <EditIcon/>
       </template>
     </RecipeCard>
   </div>

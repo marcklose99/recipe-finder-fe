@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-import {usePopupStore} from "@/stores/PopupStore";
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
 
-const popupStore = usePopupStore();
+const recipeCreationStore = useRecipeCreationStore();
 </script>
 
 <template>
   <div class="card add">
-    <div @click="popupStore.isActive = !popupStore.isActive" class="plus">
+    <div class="plus">
     </div>
   </div>
 </template>

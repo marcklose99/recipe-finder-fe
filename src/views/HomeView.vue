@@ -5,11 +5,10 @@ import AddPopup from "@/components/popup/AddPopup.vue";
 import { usePopupStore } from "@/stores/PopupStore";
 import AddCard from "@/components/cards/AddCard.vue";
 
-const popupStore = usePopupStore();
 </script>
 
 <template>
-  <AddPopup v-if="popupStore.isActive" />
+  <!-- <AddPopup v-if="popupStore.isActive" /> -->
   <main>
     <HomeViewHeader />
     <div class="container recipes">

@@ -16,6 +16,11 @@ body {
   flex-direction: column;
 }
 
+.retailer-icon {
+  height: 40px;
+  width: 40px;
+}
+
 /*********************************************************************/
 /* ------------------------ Font Styles ---------------------------- */
 /*********************************************************************/
@@ -49,6 +54,17 @@ input::-moz-placeholder {
 /* ------------------------ Form Styles ---------------------------- */
 /*********************************************************************/
 
+.standard-input {
+  height: 30px;
+
+  padding: 8px;
+  border-radius: 12px;
+  width: 100%;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+
+}
 label {
   display: block;
   margin-bottom: 12px;
@@ -56,15 +72,5 @@ label {
   span {
     display: block;
     margin-bottom: 4px;
-  }
-  input {
-    height: 45px;
-    background: #f2f2f2;
-    padding: 12px;
-    border-radius: 5px;
-    width: 100%;
-    font-size: 14px;
-    cursor: pointer;
-    border: none;
   }
 }

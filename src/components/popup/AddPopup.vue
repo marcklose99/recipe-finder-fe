@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { usePopupStore } from "@/stores/PopupStore";
 import axios from "axios";
 import type { IIngredient } from "@/data/IIngredient";
 import type { Ref } from "vue";
 import { ref } from "vue";
 import PopupFooter from "@/components/popup/PopupFooter.vue";
 import { debounce } from "lodash";
-import RecipeForm from "@/components/popup/RecipeForm.vue";
-
-const popupStore = usePopupStore();
+import RecipeForm from "@/components/popup/AddPopup.vue"
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
+const recipeCreationStore = useRecipeCreationStore();
 
 const searchTerm: Ref<String> = ref("");
 const searchResults: Ref<IIngredient[]> = ref([]);

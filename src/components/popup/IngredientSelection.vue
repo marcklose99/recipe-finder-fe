@@ -1,85 +1,40 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { Ref } from "vue";
-import axios from "axios";
-import { debounce } from "lodash";
+import Ingredient from "@/components/Ingredient.vue";
 import type { IIngredient } from "@/data/IIngredient";
-import { usePopupStore } from "@/stores/PopupStore";
-import Ingredient from "../Ingredient.vue";
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
+import { defineEmits } from 'vue';
 
-const popupStore = usePopupStore();
-const searchTerm: Ref<String> = ref("");
-const searchResults: Ref<IIngredient[]> = ref([]);
-const showResults: Ref<Boolean> = ref(false);
+const emits = defineEmits(['changeCount']);
+const recipeCreationStore = useRecipeCreationStore();
 
-const performSearch = debounce(async (query) => {
-  try {
-    const response = await axios.get(
-      `http://localhost:8080/ingredients/${query}`
-    );
-    console.log(response.data);
-    searchResults.value = response.data;
-    showResults.value = true;
-  } catch (error) {
-    console.error(error);
-  }
-}, 500);
+function initChange(ingredient: IIngredient) {
+  recipeCreationStore.selectedIngredient = ingredient;
+  emits('changeCount', ingredient)
+}
 
-const handleSearchTermChange = () => {
-  console.log(searchTerm.value);
-  if (searchTerm.value === "") {
-    showResults.value = false;
-  } else {
-    performSearch(searchTerm.value);
-  }
-};
 </script>
-
 <template>
-  <input
-    class="popup-input"
-    type="text"
-    placeholder="Search for ingredients..."
-    v-model="searchTerm"
-    @input="handleSearchTermChange"
-  />
-  <div v-if="showResults" class="popup">
-    <ul class="popup-list">
-      <Ingredient
-        v-for="ingredient in searchResults"
-        :key="ingredient.id"
-        :ingredient="ingredient"
-        @click="popupStore.addIngredientToRecipe(ingredient)"
-      />
-    </ul>
+  <div class="area">
+    <Ingredient 
+    class="ingredient-wrapper"
+    @click="initChange(ingredient)" :show="false" :show-count="true"
+      v-for="ingredient in recipeCreationStore.recipe.ingredientList" :key="ingredient.id" :ingredient="ingredient" />
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import "src/assets/base.scss";
 
-.popup {
-  max-height: 200px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
-  background-color: #fff;
+<style lang="scss">
+.area {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+  background-color: #f2f2f2;
 
-  .popup-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    ul {
-      list-style-type: none;
-    }
-
-    li {
-      padding: 8px;
-      border-bottom: 1px solid #ccc;
-
-      &:last-child {
-        border-bottom: none;
-      }
+  .ingredient-wrapper {
+    cursor: pointer;
+    &:hover {
+      border-radius: 5px;
+      background-color: #DDE0E7;
     }
   }
 }

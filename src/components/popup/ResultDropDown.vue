@@ -2,7 +2,6 @@
     <div class="drop-down">
         <ul>
             <li 
-            @click="popupStore.addIngredientToRecipe(ingredient)"
             v-for="ingredient in results" 
             :key="ingredient.id"
             >{{ ingredient.title }}</li>
@@ -11,7 +10,6 @@
 </template>
 <script setup lang="ts">
 import type {IIngredient} from "@/data/IIngredient"
-import { usePopupStore } from "@/stores/PopupStore";
 
 defineProps({
     results: {
@@ -20,7 +18,6 @@ defineProps({
     }
 });
 
-const popupStore = usePopupStore();
 </script>
 
 <style lang="scss" scoped>
