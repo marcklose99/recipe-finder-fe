@@ -7,7 +7,7 @@ onMounted(() => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
 
-    const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAAC4VOQwVMsSp3dieLhb829gpo9GiwPms`;
+    const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=`;
 
     axios.get(geocodingUrl)
       .then(response => {
