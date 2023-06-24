@@ -6,15 +6,13 @@ import FilterIcon from "@/components/icons/FilterIcon.vue";
 
 const recipeStore = useRecipeStore();
 const searchBar: Ref<string> = ref("");
-const selectedFilter: Ref<string> = ref("");
-const filterList: Ref<string[]> = ref([
-  "Alle Rezepte",
-  "Angebotsrezepte",
-  "Maximal zwei Märkte besuchen",
-  "Maximal drei Märkte besuchen",
-]);
+const filterList: Ref<any[]> = ref([
+  { filterName: "Alle Rezepte", urlValue: "all" },
+  { filterName: "Angebotsrezepte", urlValue: "offer" },
+  { filterName: "Maximal zwei Märkte besuchen", urlValue: "2" },
 
-const showFilterList: Ref<boolean> = ref(false);
+  { filterName: "Maximal drei Märkte besuchen", urlValue: "3" },
+]);
 </script>
 
 <template>
@@ -22,7 +20,7 @@ const showFilterList: Ref<boolean> = ref(false);
     <div class="content">
       <h1>Was soll es heute werden?</h1>
       <label for="searchbar" class="inner-searchbar-container">
-        <div class="filter" @click="showFilterList = !showFilterList">
+        <div class="filter">
           <div class="filter-content">
             <FilterIcon />
             <p>Filter</p>
@@ -32,10 +30,10 @@ const showFilterList: Ref<boolean> = ref(false);
             <div
               v-for="(filter, index) in filterList"
               :key="index"
-              @click="selectedFilter = filter"
+              @click="recipeStore.selectedFilter = filter.urlValue"
               class="filter-item"
             >
-              {{ filter }}
+              {{ filter.filterName }}
             </div>
           </div>
         </div>
