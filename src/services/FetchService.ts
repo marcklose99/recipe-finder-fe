@@ -3,9 +3,10 @@ import type { AxiosResponse } from "axios";
 import type { IRecipe } from "@/data/IRecipe";
 
 export default {
-  async fetchMatches(): Promise<IRecipe[]> {
+
+  async fetchRecipe(urlFilter: string): Promise<IRecipe[]> {
     return axios
-      .get("http://localhost:8080/recipes")
+      .get(`http://localhost:8080/recipes/overview/${urlFilter}`)
       .then((response: AxiosResponse) => {
         return response.data;
       })
