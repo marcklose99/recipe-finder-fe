@@ -80,6 +80,7 @@ const retailerLogo = computed(() => {
   padding: 12px;
 
   .retailer-icon {
+    width: 45px;
     flex-shrink: 0;
   }
 
