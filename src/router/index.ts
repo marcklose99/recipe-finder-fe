@@ -1,45 +1,37 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
 import RecipeView from "@/views/RecipeView.vue";
 import RecipeCreationView from "@/views/RecipeCreationView.vue";
 import IngredientCreation from "@/components/popup/IngredientCreation.vue";
 import InstructionCreation from "@/components/InstructionCreation.vue";
 import ImageCreation from "@/components/ImageCreation.vue";
+import RecipeOverview from "@/components/RecipeOverview.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      component: HomeView
-    },
-    {
-      path: '/recipe/:id',
-      component: RecipeView
-    },
-    {
-      path: '/create',
-      name: 'creation',
-      component: RecipeCreationView,
+      path: "/",
+      component: HomeView,
       children: [
         {
-          path: 'ingredient',
-          name: 'ingredient-creation',
-          component: IngredientCreation
+          path: "",
+          component: RecipeOverview,
+  
         },
         {
-          path: 'instruction',
-          name: 'instruction-creation',
-          component: InstructionCreation
+          path: "/recipe/:id",
+          name: "recipe",
+          component: RecipeView,
         },
         {
-          path: 'image',
-          name: 'image-creation',
-          component: ImageCreation
-        }
+          path: "create",
+          name: "create",
+          component: RecipeCreationView,
+        },
       ],
-    }
-  ]
-})
+    },
+  ],
+});
 
-export default router
+export default router;
