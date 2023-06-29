@@ -7,4 +7,5 @@ export interface IRecipe {
   ingredientList: IIngredient[]
   instructionList: IInstruction[]
   imageName: string
+  description: string
 }

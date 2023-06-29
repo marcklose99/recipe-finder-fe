@@ -11,7 +11,9 @@ export const useRecipeCreationStore = defineStore("recipeCreationStore", () => {
     ingredientList: [],
     instructionList: [],
     imageName: "",
+    description: "",
   });
+
 
   const file: File = {
     lastModified: 0,
@@ -37,7 +39,11 @@ export const useRecipeCreationStore = defineStore("recipeCreationStore", () => {
     },
   };
 
-  const selectedIngredient: Ref<IIngredient> = ref({} as IIngredient);
+  const selectedIngredient: Ref<IIngredient | null> = ref(null);
+
+  const openCountContext: Ref<boolean> = computed(() => {
+    return selectedIngredient.value != null ? true : false;
+  });
 
   function addIngredientToRecipe(ingredient: IIngredient) {
     if (
@@ -47,5 +53,13 @@ export const useRecipeCreationStore = defineStore("recipeCreationStore", () => {
     }
   }
 
-  return { recipe, file, selectedIngredient, addIngredientToRecipe };
+  
+
+  return {
+    openCountContext,
+    recipe,
+    file,
+    selectedIngredient,
+    addIngredientToRecipe,
+  };
 });

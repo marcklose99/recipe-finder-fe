@@ -16,5 +16,7 @@ import LogoIcon from "@/components/icons/LogoIcon.vue";
 header {
   display: flex;
   justify-content: space-around;
+  padding: 20px;
+  align-items: center;
 }
 </style>

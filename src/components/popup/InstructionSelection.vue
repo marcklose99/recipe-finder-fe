@@ -1,50 +1,94 @@
 <script setup lang="ts">
 import type { IInstruction } from "@/data/IInstruction";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
-import type { PropType } from "vue";
 
+const recipeCreationStore = useRecipeCreationStore();
+/**
+ *
+ *
+ * @param instructionToRemove
+ */
+function popInstruction(instructionToRemove: IInstruction) {
+  const instructionList: IInstruction[] =
+    recipeCreationStore.recipe.instructionList;
+  const updatedInstructionList = updateInstructionList(
+    instructionList,
+    instructionToRemove
+  );
+  recipeCreationStore.recipe.instructionList = updatedInstructionList;
+}
 
-const recipeCreationStore = useRecipeCreationStore()
-const props = defineProps({
-  instructions: {
-    type: Array as PropType<IInstruction[]>,
-    default: [],
-  },
-});
+/**
+ * Find all instructions where the stepId doesn't equal
+ * and update the step ids from containing instructions.
+ *
+ * @param instructionList
+ * @param instructionToRemove
+ */
+function updateInstructionList(
+  instructionList: IInstruction[],
+  instructionToRemove: IInstruction
+) {
+  const updatedInstructionList: IInstruction[] = instructionList.filter(
+    (instruction) => instruction.stepId != instructionToRemove.stepId
+  );
+  updateStepIds(updatedInstructionList);
+  return updatedInstructionList;
+}
+
+/**
+ * Updates the stepId property for every object in instructionList
+ *
+ * @param updatedInstructionList
+ */
+function updateStepIds(updatedInstructionList: IInstruction[]) {
+  for (let index = 0; index < updatedInstructionList.length; index++) {
+    updatedInstructionList[index].stepId =
+      updatedInstructionList.indexOf(updatedInstructionList[index]) + 1;
+  }
+}
 </script>
 
 <template>
-  <div class="instruction">
-    <div class="instruction-content">
-      <div class="single-instruction" v-for="instruction in recipeCreationStore.recipe.instructionList">
+  <div id="instructions">
+    <div
+      class="instruction"
+      v-for="instruction in recipeCreationStore.recipe.instructionList"
+    >
+      <p class="instruction-step-id">
+        {{ `${instruction.stepId}.` }}
+      </p>
+      <p class="instruction-text">
         {{ instruction.text }}
-      </div>
+      </p>
+      <button @click="popInstruction(instruction)" class="delete">
+        Delete
+      </button>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.instruction {
-  height: auto;
-  overflow: hidden;
-  justify-content: space-around;
+#instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
-  .instruction-content {
-    height: 100%;
-    counter-reset: css-counter 0;
+  .instruction {
     display: flex;
-    flex-direction: column;
-
-    .single-instruction {
-      padding: 20px;
-      counter-increment: css-counter 1;
+    align-items: center;
+    gap: 10px;
+    .instruction-step-id {
+      margin: 16px 0;
     }
-    .single-instruction:before {
-      content: counter(css-counter) ".";
-      padding: 10px;
-      border-radius: 50%;
-      background-color: grey;
-      margin-right: 10px;
+    .instruction-text {
+      width: 100%;
+    }
+
+    .delete {
+      width: 80px;
+      border: none;
+      height: 35px;
     }
   }
 }

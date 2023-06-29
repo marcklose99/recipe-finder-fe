@@ -10,11 +10,6 @@ export const useRecipeStore = defineStore("recipeStore", () => {
 
   const selectedFilter: Ref<string> = ref("");
 
-  // set counter to zero if a new recipe was added
-  watch(allRecipes, () => {
-    // popupStore.counter = 0;
-  });
-
   watch(selectedFilter, async () => {
     allRecipes.value = await FetchService.fetchRecipe(selectedFilter.value);
     filteredRecipes.value = allRecipes.value;

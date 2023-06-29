@@ -101,7 +101,7 @@ const filterList: Ref<any[]> = ref([
         position: absolute;
         top: 100%;
         width: 100%;
-        opacity: 0; /* Hide the filter-list by default */
+        opacity: 0;
         transition: opacity 0.1s ease-in;
 
         .filter-item {

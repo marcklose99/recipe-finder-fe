@@ -23,31 +23,40 @@ onMounted(async () => {
     });
   const imageUrl = await FetchService.fetchImage(route.params.id);
   url.value = imageUrl;
+  console.log(recipe.value.description)
 });
 </script>
 <template>
-  <div class="content-wrapper">
-    <div class="item ingredients">
-      <h1>{{ recipe.title }}</h1>
-      <h3>Ingredients</h3>
-      <div v-for="ingredient in recipe.ingredientList" :key="ingredient.id" class="ingredient">
-        {{ ingredient.title }}
-        {{ ingredient.nameOfRetailer }}
-        {{ ingredient.price }}
-      </div>
+  <div class="recipe-header">
+    <div class="recipe-info">
+      <p>{{ recipe.title }}</p>
+      <p>{{ recipe.description }}</p>
     </div>
-    <div class="img-wrapper">
-      <img :src="url" alt="Recipe image" />
-    </div>
-    <div class="item instruction-wrapper">
-      <h3>Instructions</h3>
-      <div v-for="instruction in recipe.instructionList" :key="instruction.stepId" class="instructions">
-        <span>{{ instruction.stepId + 1 }}</span>
-        <span>{{ instruction.text }}</span>
-      </div>
+    <div class="recipe-image-wrapper">
+      <img :src="url" alt="Recipe Image" />
     </div>
   </div>
 </template>
 <style lang="scss">
+.recipe-header {
+  display: flex;
+  justify-content: space-evenly;
 
+  .recipe-info {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    p {
+      width: 100%;
+      word-wrap: break-word;
+    }
+  }
+  .recipe-image-wrapper {
+    width: 50%;
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+}
 </style>

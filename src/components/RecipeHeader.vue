@@ -1,35 +1,46 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import ImageCreation from "@/components/ImageCreation.vue";
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
 
-const recipeName: Ref<string> = ref("");
-const recipeDescription: Ref<string> = ref("");
+const recipeCreationStore = useRecipeCreationStore();
+
 </script>
 
 <template>
   <div class="recipe-creation-header">
-    <div class="information-wrapper">
+    <div class="information-wrapper item">
       <h2>Erstellen Sie ihr Rezept!</h2>
       <form class="recipe-info-form">
-        <input class="name" type="text" v-model="recipeName" />
-        <h3>Description</h3>
+        <div class="input-wrapper">
+          <h4>Titel</h4>
+          <input
+            type="text"
+            class="title"
+            v-model="recipeCreationStore.recipe.title"
+            required
+          />
+        </div>
+        <h4>Beschreibung</h4>
         <textarea
           class="description"
           cols="30"
           rows="10"
-          v-model="recipeDescription"
+          v-model="recipeCreationStore.recipe.description"
         ></textarea>
       </form>
     </div>
 
-    <ImageCreation />
+    <ImageCreation class="item" />
   </div>
 </template>
 
 <style lang="scss" scoped>
+@import "@/assets/base.scss";
+@import "@/assets/scss/RecipeCreation.scss";
 .recipe-creation-header {
-  height: 300px;
+  height: 350px;
   display: flex;
   column-gap: 35px;
 
@@ -37,15 +48,16 @@ const recipeDescription: Ref<string> = ref("");
     width: 50%;
 
     .recipe-info-form {
-      input {
-        width: 100%;
-        margin-bottom: 5px;
+      h4 {
+        margin: 10px 0;
       }
-
-      .name {
-        height: 45px;
+      .input-wrapper {
+        title:invalid {
+          position: absolute;
+          height: 18px;
+          border: 1px solid red;
+        }
       }
-
       .description {
         resize: none;
         width: 100%;

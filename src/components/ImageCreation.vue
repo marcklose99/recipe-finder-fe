@@ -23,7 +23,7 @@ function uploadImage(event: any) {
 </script>
 <template>
   <div class="image-wrapper">
-    <span>Image Upload</span>
+    <h4>Image Upload</h4>
     <div v-show="!isPreviewImage" class="upload">
       <input id="image-upload" type="file" @change="uploadImage($event)" />
     </div>
@@ -35,21 +35,23 @@ function uploadImage(event: any) {
 </template>
 
 <style lang="scss" scoped>
+
 .image-wrapper {
   width: 50%;
   border-radius: 6px;
-  background-color: grey;
   display: flex;
   flex-direction: column;
   position: relative;
-  border: 1px solid black;
   overflow: hidden;
+
+  h4 {
+    margin: 0;
+  }
 
   .upload {
     height: 100%;
     #image-upload {
-      height: 100%;
-      width: 100%;
+      height: 93%;
       cursor: pointer;
       border-bottom-right-radius: 6px;
       border-bottom-left-radius: 6px;
@@ -85,6 +87,7 @@ function uploadImage(event: any) {
       cursor: pointer;
     }
     .uploaded-image {
+      max-height: 350px;
       width: 100%;
       object-fit: cover;
       border-radius: 5px;

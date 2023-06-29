@@ -1,69 +1,67 @@
 <script setup lang="ts">
 import type { IInstruction } from "@/data/IInstruction";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
-import type { PropType } from "vue";
-import type {Ref} from "vue";
+import type { Ref } from "vue";
 import { ref } from "vue";
+import InstructionSelection from "@/components/popup/InstructionSelection.vue";
 
+const recipeCreationStore = useRecipeCreationStore();
 
-const recipeCreationStore = useRecipeCreationStore()
-const text: Ref<string> = ref("");
-
-const props = defineProps({
-  instructions: {
-    type: Array as PropType<IInstruction[]>,
-    default: [],
-  },
-});
+const counter: Ref<number> = ref(0);
+const instructionText: Ref<string> = ref("");
 
 function addInstruction() {
+  counter.value = recipeCreationStore.recipe.instructionList.length + 1;
   const instructionStep: Ref<IInstruction> = ref({
-    stepId: 0,
-    text: text.value
-  })
+    stepId: counter.value,
+    text: instructionText.value,
+  });
   recipeCreationStore.recipe.instructionList.push(instructionStep.value);
-  console.log(instructionStep)
 }
 </script>
 
 <template>
-  <div class="instruction">
-    <div class="instruction-content">
-        <label for="instruction">
-          <span>Instruction</span>
-          <textarea id="instruction" type="text" placeholder="Instruction goes here..." v-model="text"
-            @keyup.enter="addInstruction()"></textarea>
-        </label>
-      <div class="single-instruction" v-for="instruction in recipeCreationStore.recipe.instructionList">
-        {{ instruction.text }}
+  <div class="instruction-create-wrapper item">
+    <div class="instruction-create-content">
+      <div class="instruction-create-input-wrapper">
+        <h3>Instruction</h3>
+        <p>Füge hier die Arbeitsschritte nacheinander ein.</p>
+        <input
+          v-model="instructionText"
+          @keypress.enter="addInstruction()"
+          id="instruction-input"
+          type="text"
+        />
       </div>
+    </div>
+    <div class="instruction-create-area-wrapper">
+      <InstructionSelection />
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.instruction {
-  height: auto;
-  overflow: hidden;
-  justify-content: space-around;
+<style lang="scss">
+@import "@/assets/scss/RecipeCreation.scss";
+.instruction-create-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 300px;
 
-  .instruction-content {
-    height: 100%;
-    counter-reset: css-counter 0;
-    display: flex;
-    flex-direction: column;
+  .instruction-create-content {
+    width: 50%;
+    .instruction-create-input-wrapper {
+     width: 100%;
+    }
+  }
 
-    .single-instruction {
-      padding: 20px;
-      counter-increment: css-counter 1;
-    }
-    .single-instruction:before {
-      content: counter(css-counter) ".";
-      padding: 3px;
-      border-radius: 50%;
-      background-color: grey;
-      margin-right: 10px;
-    }
+  .instruction-create-area-wrapper {
+    width: 50%;
+    min-height: 70px;
+    margin-top: 4px;
+    padding: 6px;
+    background-color: #8e9189;
+    border-radius: 4px;
   }
 }
 </style>

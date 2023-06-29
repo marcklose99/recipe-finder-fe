@@ -1,76 +1,24 @@
+:root {
+  --main-background: #FFF;
+  --main-section: rgba(238, 239, 235, 0.9);
+  --main-border: #8e9189;
+  --nav-link: #8e9189;
+
+  --1: #857f74;
+  --2:#494449;
+}
+
 body {
   margin: 0;
   padding: 0;
+  background-color: var(--main-background);
+  overflow-y: scroll;
 }
 * {
   box-sizing: border-box;
   font-family: "Roboto Light", sans-serif;
 }
 
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
 
-.retailer-icon {
-  height: 40px;
-  width: 40px;
-}
-
-/*********************************************************************/
-/* ------------------------ Font Styles ---------------------------- */
-/*********************************************************************/
-
-input::placeholder {
-  opacity: 0.5;
-  font-family: "Roboto Light", sans-serif;
-}
-
-input::-webkit-input-placeholder {
-  opacity: 0.5;
-  font-family: "Roboto Light", sans-serif;
-}
-
-input:-ms-input-placeholder {
-  opacity: 0.5;
-  font-family: "Roboto Light", sans-serif;
-}
-
-input:-moz-placeholder {
-  opacity: 0.5;
-  font-family: "Roboto Light", sans-serif;
-}
-
-input::-moz-placeholder {
-  opacity: 0.5;
-  font-family: "Roboto Light", sans-serif;
-}
-
-/*********************************************************************/
-/* ------------------------ Form Styles ---------------------------- */
-/*********************************************************************/
-
-.standard-input {
-  height: 30px;
-
-  padding: 8px;
-  border-radius: 12px;
-  width: 100%;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-
-}
-label {
-  display: block;
-  margin-bottom: 12px;
-
-  span {
-    display: block;
-    margin-bottom: 4px;
-  }
-}
+// Colors
+// #8e9189, #494449, #857f74, #eeefeb, #ddeac1
