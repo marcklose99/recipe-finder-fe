@@ -123,7 +123,9 @@ const isEmpty: Ref<boolean> = computed(() => {
 <style lang="scss" scoped>
 @import "src/assets/base.scss";
 @import "src/assets/scss/RecipeCreation.scss";
-
+input, textarea {
+  box-shadow: 0px 4px 10px 4px #999;
+}
 .ingredient-selection {
   max-height: 650px;
   

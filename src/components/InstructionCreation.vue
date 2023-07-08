@@ -35,7 +35,9 @@ function addInstruction() {
       </div>
     </div>
     <div class="instruction-create-area-wrapper">
-      <InstructionSelection />
+      <InstructionSelection
+      :instructions="recipeCreationStore.recipe.instructionList"
+      />
     </div>
   </div>
 </template>

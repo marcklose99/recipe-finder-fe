@@ -1,9 +1,28 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import type { IRecipe } from "@/data/IRecipe";
+import router from "@/router";
+import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
+
+const recipeCreationStore = useRecipeCreationStore();
+
+function newRecipe() {
+  recipeCreationStore.recipe = {
+    id: 0,
+    title: "",
+    ingredientList: [],
+    instructionList: [],
+    imageName: "",
+    description: "",
+  }
+  router.push("/create");
+  
+}
+</script>
 
 <template>
   <nav class="link-header">
     <router-link class="link" to="/">Home</router-link>
-    <router-link class="link" to="/create">Rezept hinzufügen</router-link>
+    <div @click="newRecipe()" class="link">Rezept hinzufügen</div>
   </nav>
 </template>
 
@@ -20,10 +39,11 @@
     color: var(--nav-link);
     font-weight: 400;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       transform: translateY(-5px);
-      animation: transform 4s ease-in-out;
+      animation: hover 5s ease-in-out;
       color: #494449;;
     }
   }

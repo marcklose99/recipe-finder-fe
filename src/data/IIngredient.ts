@@ -1,3 +1,5 @@
+import type { IRecipe } from "./IRecipe"
+
 export interface IIngredient {
     id: number
     title: string

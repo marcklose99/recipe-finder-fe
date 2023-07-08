@@ -22,6 +22,7 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: true,
+    required: false,
   },
   showCount: {
     type: Boolean,
@@ -34,6 +35,7 @@ const props = defineProps({
   hover: {
     type: Boolean,
     default: true,
+    required: false,
   },
 });
 
@@ -71,6 +73,8 @@ function deleteIngredientFromList(deleteIngredient: IIngredient) {
       <h4>{{ ingredient.title }}</h4>
       <div v-if="showCount">
         <p>Anzahl: {{ ingredient.count }}</p>
+        <p>Preis: {{ ingredient.price }}</p>
+        
       </div>
       <div v-if="show" class="details">
         <p>{{ ingredient.description }}</p>

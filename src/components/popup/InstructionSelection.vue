@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import type { IInstruction } from "@/data/IInstruction";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
+import type { PropType } from "vue";
 
 const recipeCreationStore = useRecipeCreationStore();
+
+const props = defineProps({
+    showBtn: {
+      type: Boolean,
+      default: true
+    },
+    instructions: {
+      type: Array as PropType<IInstruction[]>
+    }
+});
 /**
  *
  *
@@ -20,7 +31,7 @@ function popInstruction(instructionToRemove: IInstruction) {
 
 /**
  * Find all instructions where the stepId doesn't equal
- * and update the step ids from containing instructions.
+ * and update step ids.
  *
  * @param instructionList
  * @param instructionToRemove
@@ -53,7 +64,7 @@ function updateStepIds(updatedInstructionList: IInstruction[]) {
   <div id="instructions">
     <div
       class="instruction"
-      v-for="instruction in recipeCreationStore.recipe.instructionList"
+      v-for="instruction in instructions"
     >
       <p class="instruction-step-id">
         {{ `${instruction.stepId}.` }}
@@ -61,7 +72,7 @@ function updateStepIds(updatedInstructionList: IInstruction[]) {
       <p class="instruction-text">
         {{ instruction.text }}
       </p>
-      <button @click="popInstruction(instruction)" class="delete">
+      <button v-if="props.showBtn" @click="popInstruction(instruction)" class="delete">
         Delete
       </button>
     </div>

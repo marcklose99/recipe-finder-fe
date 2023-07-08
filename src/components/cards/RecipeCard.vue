@@ -30,22 +30,28 @@ const marketCount: Ref<number> = computed(() => {
 });
 
 const validTo: Ref<String> = computed(() => {
-  const dates = props.recipeData.ingredientList.map((ing) => ing.validTo);
-  const smallestDate: Date = dates.reduce((minDate, currentDate) => {
-    if (currentDate < minDate) {
-      return currentDate;
-    } else {
-      return minDate;
-    }
-  });
+  const ingredients = props.recipeData.ingredientList.filter(
+    (ingredient) => ingredient.isValid
+  );
+  const dates = ingredients.map((ingredient) => ingredient.validTo);
+  let smallestDate: Date = new Date("00/00/0000");
+  if (dates.length != 0) {
+    smallestDate = dates.reduce((minDate, currentDate) => {
+      if (currentDate < minDate) {
+        return currentDate;
+      } else {
+        return minDate;
+      }
+    });
+  }
 
-  return new Date(smallestDate)
+  return dates.length != 0 ? new Date(smallestDate)
     .toLocaleTimeString([], {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
     })
-    .split(",")[0];
+    .split(",")[0] : "Nicht im Angebot";
 });
 onBeforeMount(() => {});
 onMounted(async () => {

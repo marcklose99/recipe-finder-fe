@@ -7,7 +7,7 @@ import FetchService from "@/services/FetchService";
 export const useRecipeStore = defineStore("recipeStore", () => {
   const allRecipes: Ref<IRecipe[]> = ref([]);
   const filteredRecipes: Ref<IRecipe[]> = ref([]);
-
+  
   const selectedFilter: Ref<string> = ref("");
 
   watch(selectedFilter, async () => {

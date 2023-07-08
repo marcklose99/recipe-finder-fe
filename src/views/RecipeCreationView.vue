@@ -10,7 +10,6 @@ import RecipeFooter from "@/components/RecipeFooter.vue";
     <IngredientCreation />
     <InstructionCreation />
     <RecipeFooter />
-
 </template>
 
 <style lang="scss" scoped>

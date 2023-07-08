@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useRecipeStore } from "@/stores/RecipeStore";
-import AddCard from "@/components/cards/AddCard.vue";
 import RecipeCard from "@/components/cards/RecipeCard.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import FetchService from "@/services/FetchService";
@@ -16,7 +15,10 @@ const isEmpty: Ref<boolean> = computed(() => {
 
 
 onMounted(async () => {
+  console.log("mounted")
   recipeStore.allRecipes = await FetchService.fetchRecipe("all");
+  console.log("All Recipes:")
+  console.log(recipeStore.allRecipes)
   recipeStore.filteredRecipes = recipeStore.allRecipes;
 });
 
@@ -51,6 +53,7 @@ function showMatchingRecipe(recipeId: number): void {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2em;
+  margin-bottom: 20px;
 }
 p {
   text-align: center;

@@ -16,14 +16,13 @@ import MainHeader from "@/components/MainHeader.vue";
 <style lang="scss">
 .container {
   width: 1300px;
-  // background-color: var(--main-section);
   margin: 0 auto;
 
   .content-wrapper {
     display: flex;
     flex-direction: column;
     row-gap: 80px;
-    width: 100%;
+    position: relative;
   }
 }
 </style>

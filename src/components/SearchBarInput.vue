@@ -10,7 +10,6 @@ const filterList: Ref<any[]> = ref([
   { filterName: "Alle Rezepte", urlValue: "all" },
   { filterName: "Angebotsrezepte", urlValue: "offer" },
   { filterName: "Maximal zwei Märkte besuchen", urlValue: "2" },
-
   { filterName: "Maximal drei Märkte besuchen", urlValue: "3" },
 ]);
 </script>
@@ -59,7 +58,7 @@ const filterList: Ref<any[]> = ref([
   width: 60%;
   padding: 6px;
   border-radius: 6px;
-  background-color: aqua;
+  background-color: #8cb983;
 
   h1 {
     text-align: center;
@@ -77,7 +76,8 @@ const filterList: Ref<any[]> = ref([
       .filter {
         position: relative;
         height: 50px;
-        background-color: aqua;
+        width: 100px;
+        background-color: #8cb983;
         border-left: 2px solid #8e9189;
         border-top: 2px solid #8e9189;
         border-bottom: 2px solid #8e9189;
@@ -97,7 +97,6 @@ const filterList: Ref<any[]> = ref([
       }
 
       .filter-list {
-        background-color: blue;
         position: absolute;
         top: 100%;
         width: 100%;
@@ -132,6 +131,7 @@ const filterList: Ref<any[]> = ref([
     }
 
     .filter:hover .filter-list {
+      background-color: #b1dba8;
       opacity: 1;
     }
   }
