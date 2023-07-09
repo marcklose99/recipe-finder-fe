@@ -3,7 +3,7 @@ import type { IInstruction } from "@/data/IInstruction";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
 import type { Ref } from "vue";
 import { ref } from "vue";
-import InstructionSelection from "@/components/popup/InstructionSelection.vue";
+import InstructionSelection from "@/components/InstructionSelection.vue";
 
 const recipeCreationStore = useRecipeCreationStore();
 

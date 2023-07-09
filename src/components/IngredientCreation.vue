@@ -4,10 +4,10 @@ import type { Ref } from "vue";
 import axios from "axios";
 import { debounce } from "lodash";
 import type { IIngredient } from "@/data/IIngredient";
-import Ingredient from "../Ingredient.vue";
+import Ingredient from "@/components/Ingredient.vue";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
 import IngredientCountCreation from "@/components/IngredientCountCreation.vue";
-import IngredientSelection from "@/components/popup/IngredientSelection.vue";
+import IngredientSelection from "@/components/IngredientSelection.vue";
 
 enum FilterList {
   "ALLE" = "Alle",

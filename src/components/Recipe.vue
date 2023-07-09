@@ -7,7 +7,7 @@ import type { IRecipe } from "@/data/IRecipe";
 import type { Ref } from "vue";
 import FetchService from "@/services/FetchService";
 import Ingredient from "@/components/Ingredient.vue";
-import InstructionSelection from "@/components/popup/InstructionSelection.vue";
+import InstructionSelection from "@/components/InstructionSelection.vue";
 import EditIcon from "@/components/icons/EditIcon.vue";
 import DeleteIcon from "@/components/icons/DeleteIcon.vue";
 import { useRecipeCreationStore } from "@/stores/RecipeCreationStore";
